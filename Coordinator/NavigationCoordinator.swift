@@ -18,7 +18,9 @@ open class NavigationCoordinator: Coordinator<UINavigationController>, UINavigat
 	///	It is strongly advised to *not* override this method, but it's allowed to do so in case you really need to.
 	///	What you likely want to override is `handlePopBack(to:)` method.
 	open func navigationController(_ navigationController: UINavigationController, didShow viewController: UIViewController, animated: Bool) {
+		print("> \(type(of: self)).\(#function):\(#line) \(self) navCtrl: \(navigationController) didShow: \(viewController)")
 		let fromViewController = navigationController.transitionCoordinator?.viewController(forKey: .from)
+		print("  - coordinator: \(navigationController.transitionCoordinator) from: \(fromViewController)")
 		self.didShowController(viewController, fromViewController: fromViewController)
 	}
 
@@ -73,6 +75,7 @@ open class NavigationCoordinator: Coordinator<UINavigationController>, UINavigat
 	///
 	///	By default, this does nothing.
 	open func handlePopBack(to vc: UIViewController?) {
+        print("  - \(#function) \(vc?.title) among \(viewControllers.map { $0.title })")
 	}
 
 	open override func start(with completion: @escaping () -> Void) {
@@ -110,28 +113,44 @@ open class NavigationCoordinator: Coordinator<UINavigationController>, UINavigat
 private extension NavigationCoordinator {
 	func didShowController(_ viewController: UIViewController, fromViewController: UIViewController?) {
         if let fromViewController = fromViewController {
-            guard viewControllers.contains(fromViewController) else { return }
-            guard let last = viewControllers.last, last === fromViewController else { return }
+            guard viewControllers.contains(fromViewController) else {
+                print("  - \(fromViewController) not found in \(viewControllers)")
+                return
+            }
+            guard let last = viewControllers.last, last === fromViewController else {
+                print("  - \(fromViewController) is not the last controller \(viewControllers.last)")
+                return
+            }
 
             if let index = viewControllers.firstIndex(of: viewController) {
                 let lastPosition = viewControllers.count - 1
+                print("  - removing \(lastPosition - index) last controllers from \(viewControllers.map { $0.title })")
                 viewControllers = Array(viewControllers.dropLast(lastPosition - index))
                 handlePopBack(to: viewController)
             } else {
+                print("  - removing just 1 last controller from \(viewControllers.map { $0.title })")
                 viewControllers.removeLast()
                 handlePopBack(to: last)
             }
         } else {
-            guard viewController !== viewControllers.last else { return }
-            guard let index = viewControllers.firstIndex(of: viewController) else { return }
+            guard viewController !== viewControllers.last else {
+                print("  - \(viewController) is the last item in array. It can't be a pop event")
+                return
+            }
+            guard let index = viewControllers.firstIndex(of: viewController) else {
+                print("  - \(viewController) not found in \(viewControllers)")
+                return
+            }
 
             let lastPosition = viewControllers.count - 1
+            print("  - removing \(lastPosition - index) last controllers from \(viewControllers.map { $0.title })")
             viewControllers = Array(viewControllers.dropLast(lastPosition - index))
             handlePopBack(to: viewController)
         }
 
 		//	is there any controller left shown in this Coordinator?
 		if viewControllers.count == 0 {
+			print("  - didFinish:")
 			//	inform the parent Coordinator that this child Coordinator has no more VCs
 			parent?.coordinatorDidFinish(self, completion: {})
 			return
