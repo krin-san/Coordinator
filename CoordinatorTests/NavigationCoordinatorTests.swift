@@ -20,6 +20,14 @@ class ReportingNavigationCoordinator: NavigationCoordinator {
         navigationChangeExpectation = nil
     }
 
+    var wasStopped = false
+
+    override func stop(with completion: @escaping () -> Void) {
+        super.stop(with: completion)
+
+        wasStopped = true
+    }
+
 }
 
 class NavigationCoordinatorTests: XCTestCase {
@@ -28,18 +36,20 @@ class NavigationCoordinatorTests: XCTestCase {
 
     let toPush = 3
     let navigationController = UINavigationController()
-    var coordinator: ReportingNavigationCoordinator!
+    var main: ReportingNavigationCoordinator!
 
     override func setUp() {
         super.setUp()
 
         continueAfterFailure = false
 
-        coordinator = ReportingNavigationCoordinator(rootViewController: navigationController)
+        main = ReportingNavigationCoordinator(rootViewController: navigationController)
         window.rootViewController = navigationController
         window.makeKeyAndVisible()
-        coordinator.start {}
+        main.start {}
     }
+
+    // MARK: - Single coordinator tests
 
     func testPopAnimated() {
         pushInitialControllers()
@@ -61,43 +71,69 @@ class NavigationCoordinatorTests: XCTestCase {
         popToRoot(animated: false)
     }
 
-    func pushInitialControllers() {
+    private func pushInitialControllers() {
         for i in 0..<toPush {
-            coordinator.navigationChangeExpectation = expectation(description: "Controller #\(i) is shown")
-
-            let viewController = UIViewController()
-            viewController.title = "#\(i)"
-            coordinator.show(viewController)
-
-            waitForExpectations(timeout: 1)
+            pushInitialController(coordinator: main, title: "#\(i)")
         }
 
-        XCTAssertEqual(coordinator.viewControllers, navigationController.viewControllers)
-        XCTAssertEqual(coordinator.viewControllers.count, toPush)
+        XCTAssertEqual(main.viewControllers, navigationController.viewControllers)
+        XCTAssertEqual(main.viewControllers.count, toPush)
         XCTAssertEqual(navigationController.viewControllers.count, toPush)
     }
 
-    func pop(animated: Bool) {
-        coordinator.navigationChangeExpectation = expectation(description: "Controllers popped")
+    private func pop(animated: Bool) {
+        main.navigationChangeExpectation = expectation(description: "Controllers popped")
         navigationController.popViewController(animated: animated)
 
         waitForExpectations(timeout: 1)
 
-        XCTAssertEqual(coordinator.viewControllers, navigationController.viewControllers)
-        XCTAssertEqual(coordinator.viewControllers.count, toPush - 1)
+        XCTAssertEqual(main.viewControllers, navigationController.viewControllers)
+        XCTAssertEqual(main.viewControllers.count, toPush - 1)
         XCTAssertEqual(navigationController.viewControllers.count, toPush - 1)
     }
 
-    func popToRoot(animated: Bool) {
-        coordinator.navigationChangeExpectation = expectation(description: "Controllers popped")
+    private func popToRoot(animated: Bool) {
+        main.navigationChangeExpectation = expectation(description: "Controllers popped")
         let popped = navigationController.popToRootViewController(animated: animated)
 
         waitForExpectations(timeout: 1)
 
-        XCTAssertEqual(coordinator.viewControllers, navigationController.viewControllers)
-        XCTAssertEqual(coordinator.viewControllers.count, 1)
+        XCTAssertEqual(main.viewControllers, navigationController.viewControllers)
+        XCTAssertEqual(main.viewControllers.count, 1)
         XCTAssertEqual(navigationController.viewControllers.count, 1)
         XCTAssertTrue(popped?.count == (toPush - 1))
+    }
+
+    // MARK: - Multi-coordinator tests
+
+    func testPopDetection() {
+        pushInitialControllers()
+
+        let child = ReportingNavigationCoordinator(rootViewController: main.rootViewController)
+        main.startChild(coordinator: child)
+        pushInitialController(coordinator: child, title: "#0 @ child")
+
+        child.navigationChangeExpectation = expectation(description: "Controller popped")
+        navigationController.popViewController(animated: true)
+        waitForExpectations(timeout: 1)
+
+        XCTAssertTrue(child.wasStopped)
+    }
+
+    // MARK: - Helpers
+
+    private func pushInitialController(coordinator: ReportingNavigationCoordinator, title: String) {
+        let initialCount = navigationController.viewControllers.count
+
+        coordinator.navigationChangeExpectation = expectation(description: "Controller \(title) is shown")
+
+        let viewController = UIViewController()
+        viewController.title = title
+        coordinator.show(viewController)
+
+        waitForExpectations(timeout: 1)
+
+        XCTAssertEqual(navigationController.viewControllers.count, initialCount + 1)
     }
 
 }
