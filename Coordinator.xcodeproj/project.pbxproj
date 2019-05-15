@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B0717EE5228C249C001366CD /* Coordinator.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D0A788C521E25679002F34B2 /* Coordinator.framework */; };
+		B0717EEC228C24CC001366CD /* NavigationCoordinatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B0717EEB228C24CC001366CD /* NavigationCoordinatorTests.swift */; };
 		D0A788C921E25679002F34B2 /* Coordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = D0A788C721E25679002F34B2 /* Coordinator.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		D0A788D721E2571B002F34B2 /* Coordinating.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A788D321E2571B002F34B2 /* Coordinating.swift */; };
 		D0A788D821E2571B002F34B2 /* NavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A788D421E2571B002F34B2 /* NavigationCoordinator.swift */; };
@@ -14,7 +16,20 @@
 		D0A788DA21E2571B002F34B2 /* UIKit-CoordinatingExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0A788D621E2571B002F34B2 /* UIKit-CoordinatingExtensions.swift */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		B0717EE6228C249C001366CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = D04B76541DE5B6D2009F1B9A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D0A788C421E25679002F34B2;
+			remoteInfo = Coordinator;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		B0717EE0228C249C001366CD /* CoordinatorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CoordinatorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		B0717EE4228C249C001366CD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B0717EEB228C24CC001366CD /* NavigationCoordinatorTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NavigationCoordinatorTests.swift; sourceTree = "<group>"; };
 		D06488D921D0FA8F00F3F0E7 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D0A788C521E25679002F34B2 /* Coordinator.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Coordinator.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D0A788C721E25679002F34B2 /* Coordinator.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Coordinator.h; sourceTree = "<group>"; };
@@ -26,6 +41,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		B0717EDD228C249C001366CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0717EE5228C249C001366CD /* Coordinator.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0A788C221E25679002F34B2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -43,11 +66,21 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		B0717EE1228C249C001366CD /* CoordinatorTests */ = {
+			isa = PBXGroup;
+			children = (
+				B0717EEB228C24CC001366CD /* NavigationCoordinatorTests.swift */,
+				B0717EE4228C249C001366CD /* Info.plist */,
+			);
+			path = CoordinatorTests;
+			sourceTree = "<group>";
+		};
 		D04B76531DE5B6D2009F1B9A = {
 			isa = PBXGroup;
 			children = (
 				D0A788D221E2571B002F34B2 /* Coordinator */,
 				D06488D921D0FA8F00F3F0E7 /* README.md */,
+				B0717EE1228C249C001366CD /* CoordinatorTests */,
 				D0A788C621E25679002F34B2 /* Framework */,
 				D04B765D1DE5B6D2009F1B9A /* Products */,
 				771A0BD9B13E86050EF52F25 /* Frameworks */,
@@ -58,6 +91,7 @@
 			isa = PBXGroup;
 			children = (
 				D0A788C521E25679002F34B2 /* Coordinator.framework */,
+				B0717EE0228C249C001366CD /* CoordinatorTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -96,6 +130,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		B0717EDF228C249C001366CD /* CoordinatorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0717EEA228C249C001366CD /* Build configuration list for PBXNativeTarget "CoordinatorTests" */;
+			buildPhases = (
+				B0717EDC228C249C001366CD /* Sources */,
+				B0717EDD228C249C001366CD /* Frameworks */,
+				B0717EDE228C249C001366CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				B0717EE7228C249C001366CD /* PBXTargetDependency */,
+			);
+			name = CoordinatorTests;
+			productName = CoordinatorTests;
+			productReference = B0717EE0228C249C001366CD /* CoordinatorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		D0A788C421E25679002F34B2 /* Coordinator */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = D0A788CE21E25679002F34B2 /* Build configuration list for PBXNativeTarget "Coordinator" */;
@@ -120,10 +172,15 @@
 		D04B76541DE5B6D2009F1B9A /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0810;
+				LastSwiftUpdateCheck = 1020;
 				LastUpgradeCheck = 1020;
 				ORGANIZATIONNAME = "Radiant Tap";
 				TargetAttributes = {
+					B0717EDF228C249C001366CD = {
+						CreatedOnToolsVersion = 10.2;
+						DevelopmentTeam = M5S39QR73R;
+						ProvisioningStyle = Automatic;
+					};
 					D0A788C421E25679002F34B2 = {
 						CreatedOnToolsVersion = 10.1;
 						LastSwiftMigration = 1020;
@@ -145,11 +202,19 @@
 			projectRoot = "";
 			targets = (
 				D0A788C421E25679002F34B2 /* Coordinator */,
+				B0717EDF228C249C001366CD /* CoordinatorTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		B0717EDE228C249C001366CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0A788C321E25679002F34B2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -160,6 +225,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		B0717EDC228C249C001366CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B0717EEC228C24CC001366CD /* NavigationCoordinatorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		D0A788C121E25679002F34B2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -173,7 +246,60 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		B0717EE7228C249C001366CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D0A788C421E25679002F34B2 /* Coordinator */;
+			targetProxy = B0717EE6228C249C001366CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		B0717EE8228C249C001366CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M5S39QR73R;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = CoordinatorTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krin.CoordinatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		B0717EE9228C249C001366CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M5S39QR73R;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				INFOPLIST_FILE = CoordinatorTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.2;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				MTL_FAST_MATH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.krin.CoordinatorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		D04B766C1DE5B6D2009F1B9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -357,6 +483,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		B0717EEA228C249C001366CD /* Build configuration list for PBXNativeTarget "CoordinatorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B0717EE8228C249C001366CD /* Debug */,
+				B0717EE9228C249C001366CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		D04B76571DE5B6D2009F1B9A /* Build configuration list for PBXProject "Coordinator" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
