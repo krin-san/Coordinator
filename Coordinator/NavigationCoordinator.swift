@@ -123,6 +123,7 @@ private extension NavigationCoordinator {
 		//	(or at least add a breakpoint so you know when it happens)
 		//	since those checks point to logical errors in the app's architecture flows.
 
+        print("\(Date()): >>> \(type(of: self)).\(#function):\(#line) Title: \(viewController.title)")
 
 		//	If VC, which was just shown, is the last in this Coordinator's stack,
 		//	then just bail out, because popped VC was not in this Coordinator's domain.
@@ -130,6 +131,7 @@ private extension NavigationCoordinator {
 		//		| (It means we had some `show(vc)` happen that _did not_ update this Coordinator's viewControllers,
 		//		|  nor it switched to some other Coordinator which should have become UINC.delegate)
 		if viewController === viewControllers.last {
+            print("\(Date()): >>> \(type(of: self)).\(#function):\(#line) Early exit by 'viewController === viewControllers.last'")
 			return
 		}
 		
@@ -137,22 +139,24 @@ private extension NavigationCoordinator {
 		//	If it's not there, then bail out.
 		//		| Again, this should not happen,
 		//		| since this Coordinator should then not be UINCDelegate.
-		guard let index = viewControllers.firstIndex(of: viewController) else {
-			return
+		if let index = viewControllers.firstIndex(of: viewController) {
+			//	Note: using firstIndex(of:) and not .last nicely
+			//	handles if you programatically pop more than one UIVC
+			//	but not more than coordinator shown.
+			
+			let lastIndex = viewControllers.count - 1
+			if lastIndex <= index {
+                print("\(Date()): >>> \(type(of: self)).\(#function):\(#line) Early exit by 'let index = viewControllers.firstIndex(...)'")
+				return
+			}
+            print("\(Date()): >>> \(type(of: self)).\(#function):\(#line) Drop last \(lastIndex - index) controllers")
+			viewControllers = Array(viewControllers.dropLast(lastIndex - index))
+		} else {
+            print("\(Date()): >>> \(type(of: self)).\(#function):\(#line) 'removeAll()'")
+			viewControllers.removeAll()
 		}
 
-		//	Note: using firstIndex(of:) and not .last nicely
-		//	handles if you programatically pop more than one UIVC.
-
-
-		let lastIndex = viewControllers.count - 1
-		if lastIndex <= index {
-			return
-		}
-		viewControllers = Array(viewControllers.dropLast(lastIndex - index))
 		handlePopBack(to: viewController)
-
-
 
 		//	is there any controller left shown in this Coordinator?
 		if viewControllers.count == 0 {

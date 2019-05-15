@@ -51,6 +51,30 @@ class NavigationCoordinatorTests: XCTestCase {
 
     // MARK: - Single coordinator tests
 
+    func _testPushOutsideCoordinator() {
+        pushInitialController(coordinator: main, title: "#0")
+
+        let viewController = UIViewController()
+        viewController.title = "Controller pushed outside of coordinator"
+
+        XCTAssertEqual(main.viewControllers.count, 1)
+        XCTAssertEqual(navigationController.viewControllers.count, 1)
+
+        print(">>> Push")
+        navigationController.pushViewController(viewController, animated: false)
+
+        XCTAssertFalse(main.wasStopped)
+        XCTAssertEqual(main.viewControllers.count, 1)
+        XCTAssertEqual(navigationController.viewControllers.count, 2)
+
+        print(">>> Pop")
+        navigationController.popViewController(animated: false)
+
+        XCTAssertFalse(main.wasStopped)
+        XCTAssertEqual(main.viewControllers.count, 1)
+        XCTAssertEqual(navigationController.viewControllers.count, 1)
+    }
+
     func testPopAnimated() {
         pushInitialControllers()
         pop(animated: true)
